@@ -19,23 +19,23 @@ services:
     command: >
       python3 -m app.services.contract_observer
 
-  etherdelta_observer:
-    image: forkdelta/backend
-    build: .
-    depends_on:
-      - postgres
-      - redis
-      - blockclock
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      HTTP_PROVIDER_URL: ${HTTP_PROVIDER_URL}
-    links:
-      - postgres
-      - redis
-    command: >
-      python3 -m app.services.etherdelta_observer
+  #etherdelta_observer:
+  #  image: forkdelta/backend
+  #  build: .
+  #  depends_on:
+  #    - postgres
+  #    - redis
+  #    - blockclock
+  #  environment:
+  #    POSTGRES_DB: ${POSTGRES_DB}
+  #    POSTGRES_USER: ${POSTGRES_USER}
+  #    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #    HTTP_PROVIDER_URL: ${HTTP_PROVIDER_URL}
+  #  links:
+  #    - postgres
+  #    - redis
+  #  command: >
+  #    python3 -m app.services.etherdelta_observer
 
   huey_consumer:
     image: forkdelta/backend
