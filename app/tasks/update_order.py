@@ -25,7 +25,7 @@ from requests.packages.urllib3.util.retry import Retry
 from web3 import Web3, HTTPProvider
 
 from ..app import App
-from ..config import ED_CONTRACT_ADDR, ED_CONTRACT_ABI
+from ..config import BD_CONTRACT_ADDR, BD_CONTRACT_ABI
 from ..lib.threaded_wrap_async import threaded_wrap_async
 from ..src.contract_event_utils import block_timestamp
 

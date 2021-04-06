@@ -10,10 +10,6 @@ services:
     volumes:
       - .:/usr/src/app
 
-  etherdelta_observer:
-    volumes:
-      - .:/usr/src/app
-
   huey_consumer:
     volumes:
       - .:/usr/src/app

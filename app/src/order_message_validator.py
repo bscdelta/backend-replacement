@@ -106,7 +106,7 @@ ORDER_MESSAGE_SCHEMA = {
     },
 }
 
-ORDER_MESSAGE_SCHEMA_ETHERDELTA = {
+ORDER_MESSAGE_SCHEMA_BSCDELTA = {
     "tokenGet": {
         "type": "string",
         "required": True,
@@ -182,5 +182,5 @@ class OrderMessageValidator(OrderMessageValidatorBase):
 
 class OrderMessageValidatorEtherdelta(OrderMessageValidatorBase):
     def __init__(self, *args, **kwargs):
-        super().__init__(ORDER_MESSAGE_SCHEMA_ETHERDELTA, *args, **kwargs)
+        super().__init__(ORDER_MESSAGE_SCHEMA_BSCDELTA, *args, **kwargs)
         self.allow_unknown = True

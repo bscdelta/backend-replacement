@@ -7,9 +7,6 @@ services:
   contract_observer:
     restart: on-failure
 
-  etherdelta_observer:
-    restart: on-failure
-
   huey_consumer:
     restart: on-failure
 

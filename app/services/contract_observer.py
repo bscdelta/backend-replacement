@@ -18,7 +18,7 @@
 
 from ..app import App
 import asyncio
-from ..config import ED_CONTRACT_ADDR, ED_CONTRACT_ABI, HTTP_PROVIDER_URL, WS_PROVIDER_URL
+from ..config import BD_CONTRACT_ADDR, BD_CONTRACT_ABI, HTTP_PROVIDER_URL, WS_PROVIDER_URL
 from ..src.contract_event_recorders import record_cancel, record_deposit, process_order, process_trade, record_withdraw
 from ..src.contract_event_utils import block_timestamp
 import logging
@@ -31,7 +31,7 @@ from ..src.websocket_filter_set import WebsocketFilterSet
 logger = logging.getLogger("contract_observer")
 
 web3 = App().web3
-contract = web3.eth.contract(ED_CONTRACT_ADDR, abi=ED_CONTRACT_ABI)
+contract = web3.eth.contract(BD_CONTRACT_ADDR, abi=BD_CONTRACT_ABI)
 
 filter_set = WebsocketFilterSet(contract)
 filter_set.on_event('Trade', process_trade)

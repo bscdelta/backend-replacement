@@ -18,7 +18,7 @@
 
 from ..app import App
 import asyncio
-from ..config import ED_CONTRACT_ADDR, ED_CONTRACT_ABI, HTTP_PROVIDER_URL
+from ..config import BD_CONTRACT_ADDR, BD_CONTRACT_ABI, HTTP_PROVIDER_URL
 from .contract_event_recorders import record_cancel, record_deposit, process_order, process_trade, record_withdraw
 import sys
 from time import time, sleep
@@ -53,7 +53,7 @@ async def main():
     print("Backfill", event_name, "from", from_block, "to", to_block, "in",
           block_step, "block step")
 
-    ed_contract = web3.eth.contract(ED_CONTRACT_ADDR, abi=ED_CONTRACT_ABI)
+    bd_contract = web3.eth.contract(BD_CONTRACT_ADDR, abi=BD_CONTRACT_ABI)
     event_filter = None
     total_events = 0
 
@@ -64,13 +64,13 @@ async def main():
             print(
                 int(time()), block_number - block_step, block_number,
                 total_events)
-            event_filter = ed_contract.on(
+            event_filter = bd_contract.on(
                 event_name, {
                     'fromBlock': block_number - block_step,
                     'toBlock': block_number
                 })
             for event in event_filter.get(only_changes=False):
-                await EVENT_HANDLERS[event_name](ed_contract, event_name,
+                await EVENT_HANDLERS[event_name](bd_contract, event_name,
                                                  event)
                 total_events += 1
             sleep(3)

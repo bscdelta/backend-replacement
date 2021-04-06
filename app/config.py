@@ -23,18 +23,10 @@ WS_PROVIDER_URL = environ.get("WS_PROVIDER_URL")
 ALLOWED_ORIGIN_SUFFIXES = environ.get("ALLOWED_ORIGIN_SUFFIXES",
                                       "localhost").split(",")
 
-ED_CONTRACT_ADDR = '0x8d12a197cb00d4747a1fe03395095ce2a5cc6819'
-with open('etherdelta.abi.json') as f:
+BD_CONTRACT_ADDR = '0xd223B72593403fC4Ca22d501c198fd9927E4C67E'
+with open('forkdelta.abi.json') as f:
     import json
-    ED_CONTRACT_ABI = json.load(f)
-ED_WS_SERVERS = [
-    "wss://socket01.etherdelta.com/socket.io/?EIO=3&transport=websocket",
-    "wss://socket02.etherdelta.com/socket.io/?EIO=3&transport=websocket",
-    "wss://socket03.etherdelta.com/socket.io/?EIO=3&transport=websocket",
-    "wss://socket04.etherdelta.com/socket.io/?EIO=3&transport=websocket",
-    "wss://socket05.etherdelta.com/socket.io/?EIO=3&transport=websocket",
-    "wss://socket06.etherdelta.com/socket.io/?EIO=3&transport=websocket",
-]
+    BD_CONTRACT_ABI = json.load(f)
 
 POSTGRES_HOST = "postgres"
 POSTGRES_DB = environ.get("POSTGRES_DB")
@@ -43,9 +35,5 @@ POSTGRES_PASSWORD = environ.get("POSTGRES_PASSWORD")
 
 HTTP_ORDERS_ENDPOINT_SECRET = environ.get("HTTP_ORDERS_ENDPOINT_SECRET")
 
-FRONTEND_CONFIG_FILE = "https://forkdelta.app/config/main.json"
-STOPPED_TOKENS = (
-    "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",  # EOS: https://block.one/news/community-reminder-eos-token-registration-and-freeze/
-    "0x7e9e431a0b8c4d532c745b1043c7fa29a48d4fba",  # eosDAC: https://twitter.com/eosdac/status/1002657571197673475?lang=en
-    "0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7",  # JNT: https://t.me/jibrel_network/129713
-)
+FRONTEND_CONFIG_FILE = "http://bscdelta.com/config/main.json"
+STOPPED_TOKENS = ()
