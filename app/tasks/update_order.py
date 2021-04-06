@@ -198,7 +198,7 @@ async def bulk_update_orders(orders):
 
 async def refresh_order_state(orders):
     data = dict(
-        contractAddr=ED_CONTRACT_ADDR,
+        contractAddr=BD_CONTRACT_ADDR,
         orders={
             Web3.toHex(order["signature"]): list(
                 map(str, order_as_args(order)))

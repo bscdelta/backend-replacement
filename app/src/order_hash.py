@@ -16,7 +16,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-from ..config import ED_CONTRACT_ADDR
+from ..config import BD_CONTRACT_ADDR
 from decimal import Decimal
 from eth_utils import add_0x_prefix, remove_0x_prefix
 from hashlib import sha256
@@ -32,7 +32,7 @@ def sha256_like_solidity(type_value_tuples):
     return add_0x_prefix(sha256(to_bytes(hexstr=hex_string)).hexdigest())
 
 
-def make_order_hash(order, contract_addr=ED_CONTRACT_ADDR):
+def make_order_hash(order, contract_addr=BD_CONTRACT_ADDR):
     hash_parts = [('address', contract_addr), ('address', order["tokenGet"]),
                   ('uint256', Web3.toInt(Decimal(order["amountGet"]))),
                   ('address',

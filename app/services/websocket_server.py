@@ -28,7 +28,7 @@ from web3 import Web3
 import websockets
 
 from ..app import App
-from ..config import ALLOWED_ORIGIN_SUFFIXES, ED_CONTRACT_ADDR, HTTP_ORDERS_ENDPOINT_SECRET, STOPPED_TOKENS
+from ..config import ALLOWED_ORIGIN_SUFFIXES, BD_CONTRACT_ADDR, HTTP_ORDERS_ENDPOINT_SECRET, STOPPED_TOKENS
 from ..src.erc20_token import ERC20Token
 from ..src.order_enums import OrderState
 from ..constants import ZERO_ADDR, ZERO_ADDR_BYTES, MAX_ORDERS_PER_USER
@@ -526,7 +526,7 @@ async def get_market(sid, data):
     token = data["token"].lower() if "token" in data and Web3.isAddress(
         data["token"]) else None
     user = data["user"].lower() if "user" in data and Web3.isAddress(
-        data["user"]) and data["user"].lower() != ED_CONTRACT_ADDR else None
+        data["user"]) and data["user"].lower() != BD_CONTRACT_ADDR else None
 
     response = {"returnTicker": format_tickers(await get_tickers())}
 
@@ -749,7 +749,7 @@ async def handle_order(sid, data):
     message = v.document  # Get data with validated and coerced values
 
     # Require new orders are posted to the latest contract
-    if message["contractAddr"].lower() != ED_CONTRACT_ADDR.lower():
+    if message["contractAddr"].lower() != BD_CONTRACT_ADDR.lower():
         error_msg = "Cannot post an order to contract {}".format(
             message["contractAddr"].lower())
         logger.warning("Order rejected: %s", error_msg)
