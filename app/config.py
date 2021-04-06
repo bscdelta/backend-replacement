@@ -24,7 +24,7 @@ ALLOWED_ORIGIN_SUFFIXES = environ.get("ALLOWED_ORIGIN_SUFFIXES",
                                       "localhost").split(",")
 
 BD_CONTRACT_ADDR = '0xd223B72593403fC4Ca22d501c198fd9927E4C67E'
-with open('forkdelta.abi.json') as f:
+with open('bscdelta.abi.json') as f:
     import json
     BD_CONTRACT_ABI = json.load(f)
 
