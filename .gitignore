@@ -1,3 +1,5 @@
+etc/nginx/html
+
 ##
 # .gitignore based on https://github.com/github/gitignore/blob/master/Python.gitignore
 #
