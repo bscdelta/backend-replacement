@@ -35,5 +35,5 @@ POSTGRES_PASSWORD = environ.get("POSTGRES_PASSWORD")
 
 HTTP_ORDERS_ENDPOINT_SECRET = environ.get("HTTP_ORDERS_ENDPOINT_SECRET")
 
-FRONTEND_CONFIG_FILE = "http://bscdelta.com/config/main.json"
+FRONTEND_CONFIG_FILE = "https://bscdelta.com/config/main.json"
 STOPPED_TOKENS = ()
