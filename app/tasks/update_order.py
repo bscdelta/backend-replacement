@@ -209,8 +209,10 @@ async def refresh_order_state(orders):
     s = requests.Session()
     retries = Retry(
         total=5, backoff_factor=1, status_forcelist=[500, 502, 503, 504])
+    print 'http://', HTTPAdapter(max_retries=retries)
     s.mount('http://', HTTPAdapter(max_retries=retries))
     r = s.post("http://order_refresh:3000", json=data, timeout=(3, 15))
+    print(r)
     return r.json()
 
 
