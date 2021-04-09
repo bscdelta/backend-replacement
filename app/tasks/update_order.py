@@ -174,7 +174,7 @@ async def bulk_update_orders(orders):
     for i in range(0, len(orders), MAX_ORDER_SERVICE_CHUNK):
         sub_orders = orders[i:i + MAX_ORDER_SERVICE_CHUNK]
         state = await refresh_order_state(sub_orders)
-
+        print(state)
         update_block_number = int(state["blockNumber"])
         updated_at = datetime.fromtimestamp(
             block_timestamp(App().web3, update_block_number), tz=None)
@@ -209,10 +209,8 @@ async def refresh_order_state(orders):
     s = requests.Session()
     retries = Retry(
         total=5, backoff_factor=1, status_forcelist=[500, 502, 503, 504])
-    print 'http://', HTTPAdapter(max_retries=retries)
     s.mount('http://', HTTPAdapter(max_retries=retries))
     r = s.post("http://order_refresh:3000", json=data, timeout=(3, 15))
-    print(r)
     return r.json()
 
 
