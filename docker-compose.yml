@@ -73,9 +73,11 @@ services:
       - redis
     command: >
       python3 -m app.services.websocket_server
+    ports:
+      - "8080:8080"
 
   order_refresh:
-    image: https://github.com/bscdelta/order-refresh-service-docker.git
+    build: https://github.com/bscdelta/order-refresh-service-docker.git
     environment:
       HTTP_PROVIDER_URL: ${HTTP_PROVIDER_URL}
 
