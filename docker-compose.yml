@@ -75,7 +75,7 @@ services:
       python3 -m app.services.websocket_server
 
   order_refresh:
-    image: forkdelta/order-refresh-service
+    image: https://github.com/bscdelta/order-refresh-service-docker.git
     environment:
       HTTP_PROVIDER_URL: ${HTTP_PROVIDER_URL}
 
