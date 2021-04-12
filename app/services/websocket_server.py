@@ -31,7 +31,8 @@ from ..app import App
 from ..config import ALLOWED_ORIGIN_SUFFIXES, BD_CONTRACT_ADDR, HTTP_ORDERS_ENDPOINT_SECRET, STOPPED_TOKENS
 from ..src.erc20_token import ERC20Token
 from ..src.order_enums import OrderState
-from ..constants import ZERO_ADDR, ZERO_ADDR_BYTES, MAX_ORDERS_PER_USER
+from ..constants import ZERO_ADDR, ZERO_ADDR_BYTES, MAX_ORDERS_PER_USER, BASE_ADDR
+
 from ..lib import rapidjson
 
 sio_logger = logging.getLogger('socketio.AsyncServer')
@@ -757,7 +758,7 @@ async def handle_order(sid, data):
         return
 
     # Require one side of the order to be base currency
-    if message["tokenGet"] != ZERO_ADDR and message["tokenGive"] != ZERO_ADDR:
+    if message["tokenGet"] != BASE_ADDR and message["tokenGive"] != BASE_ADDR:
         error_msg = "Cannot post order with pair {}-{}: neither is a base currency".format(
             message["tokenGet"], message["tokenGive"])
         logger.warning("Order rejected: %s", error_msg)
