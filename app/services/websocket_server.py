@@ -31,7 +31,7 @@ from ..app import App
 from ..config import ALLOWED_ORIGIN_SUFFIXES, BD_CONTRACT_ADDR, HTTP_ORDERS_ENDPOINT_SECRET, STOPPED_TOKENS
 from ..src.erc20_token import ERC20Token
 from ..src.order_enums import OrderState
-from ..constants import ZERO_ADDR, ZERO_ADDR_BYTES, MAX_ORDERS_PER_USER, BASE_ADDR
+from ..constants import ZERO_ADDR, ZERO__ADDR_BYTES, MAX_ORDERS_PER_USER, BASE_ADDR
 
 from ..lib import rapidjson
 
@@ -133,7 +133,7 @@ def format_trade(trade):
     contract_give = ERC20Token(trade["token_give"])
     contract_get = ERC20Token(trade["token_get"])
 
-    side = "buy" if trade["token_get"] == ZERO_ADDR_BYTES else "sell"
+    side = "buy" if trade["token_get"] == ZERO__ADDR_BYTES else "sell"
     if side == "buy":
         token = trade["token_give"]
         amount_coin = contract_give.denormalize_value(trade["amount_give"])
@@ -163,7 +163,7 @@ def format_trade(trade):
 
 async def get_trades(token_hexstr, user_hexstr=None):
     where = '(("token_give" = $1 AND "token_get" = $2) OR ("token_get" = $1 AND "token_give" = $2))'
-    placeholder_args = [Web3.toBytes(hexstr=token_hexstr), ZERO_ADDR_BYTES]
+    placeholder_args = [Web3.toBytes(hexstr=token_hexstr), ZERO__ADDR_BYTES]
     if user_hexstr:
         where += ' AND ("addr_give" = $3 OR "addr_get" = $3)'
         placeholder_args.append(Web3.toBytes(hexstr=user_hexstr))
@@ -187,7 +187,7 @@ async def get_new_trades(created_after):
             FROM trades
             WHERE ("date" > $1) AND ("token_give" = $2 OR "token_get" = $2)
             ORDER BY block_number DESC, date DESC
-            """, created_after, ZERO_ADDR_BYTES)
+            """, created_after, ZERO__ADDR_BYTES)
 
 
 def format_transfer(transfer):
@@ -332,7 +332,7 @@ def format_order(record):
     contract_give = ERC20Token(record["token_give"])
     contract_get = ERC20Token(record["token_get"])
 
-    side = "buy" if record["token_give"] == ZERO_ADDR_BYTES else "sell"
+    side = "buy" if record["token_give"] == ZERO__ADDR_BYTES else "sell"
 
     response = {
         "id": "{}_{}".format(Web3.toHex(record["signature"]), side),
@@ -627,11 +627,11 @@ async def stream_order_updates():
         orders_buys = list(
             filter(
                 not_stopped_predicate, await get_updated_orders(
-                    updated_after, token_give_hexstr=BASE_ADDR)))
+                    updated_after, token_give_hexstr=ZERO_ADDR)))
         orders_sells = list(
             filter(
                 not_stopped_predicate, await get_updated_orders(
-                    updated_after, token_get_hexstr=BASE_ADDR)))
+                    updated_after, token_get_hexstr=ZERO_ADDR)))
         if orders_buys or orders_sells:  # Emit when there are updates only
             await sio.emit(
                 "orders", {
@@ -758,7 +758,7 @@ async def handle_order(sid, data):
         return
 
     # Require one side of the order to be base currency
-    if message["tokenGet"] != BASE_ADDR and message["tokenGive"] != BASE_ADDR:
+    if message["tokenGet"] != ZERO_ADDR and message["tokenGive"] != ZERO_ADDR:
         error_msg = "Cannot post order with pair {}-{}: neither is a base currency".format(
             message["tokenGet"], message["tokenGive"])
         logger.warning("Order rejected: %s", error_msg)

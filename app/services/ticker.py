@@ -28,7 +28,7 @@ from web3 import Web3
 from ..app import App
 from ..src.erc20_token import ERC20Token
 from ..config import STOPPED_TOKENS
-from ..constants import ZERO_ADDR, ZERO_ADDR_BYTES, FILTER_ORDERS_UNDER_ETH
+from ..constants import ZERO_ADDR, ZERO__ADDR_BYTES, FILTER_ORDERS_UNDER_ETH
 
 logger = logging.getLogger('services.ticker')
 logger.setLevel(logging.DEBUG)
@@ -141,7 +141,7 @@ async def get_market_spread(token_hexstr, current_block):
                         AND ("available_volume" IS NULL OR "available_volume" > 0)
                         AND (COALESCE("available_volume", "amount_get") * 10 ^ -18) > $4
                     ) AS ask
-            """, ZERO_ADDR_BYTES, Web3.toBytes(hexstr=token_hexstr),
+            """, ZERO__ADDR_BYTES, Web3.toBytes(hexstr=token_hexstr),
             current_block, 10.0 * FILTER_ORDERS_UNDER_ETH)
 
 
@@ -187,7 +187,7 @@ async def update_ticker(token_addr):
 
     trade = await get_last_trade(token_addr)
     if trade:
-        side = "buy" if trade["token_get"] == ZERO_ADDR_BYTES else "sell"
+        side = "buy" if trade["token_get"] == ZERO__ADDR_BYTES else "sell"
         # Compute the price.
         try:
             if side == "buy":
