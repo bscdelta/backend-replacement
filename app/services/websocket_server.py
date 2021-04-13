@@ -627,11 +627,11 @@ async def stream_order_updates():
         orders_buys = list(
             filter(
                 not_stopped_predicate, await get_updated_orders(
-                    updated_after, token_give_hexstr=ZERO_ADDR)))
+                    updated_after, token_give_hexstr=BASE_ADDR)))
         orders_sells = list(
             filter(
                 not_stopped_predicate, await get_updated_orders(
-                    updated_after, token_get_hexstr=ZERO_ADDR)))
+                    updated_after, token_get_hexstr=BASE_ADDR)))
         if orders_buys or orders_sells:  # Emit when there are updates only
             await sio.emit(
                 "orders", {
